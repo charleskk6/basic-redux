@@ -1,6 +1,12 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import MainContainer from "./components/container/MainContainer";
+import React from "react";
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import store from "./js/store/index";
+import App from "./components/App";
 
-const wrapper = document.getElementById("app");
-wrapper ? ReactDOM.render(<MainContainer />, wrapper) : false;
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("app")
+);

@@ -1,34 +1,54 @@
 import React, { Component } from "react";
-import TextField from "../presentational/TextField";
+import { connect } from "react-redux";
+import uuid from "uuid";
+import { addArticle } from "../../js/actions/index";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addArticle: article => dispatch(addArticle(article))// function
+  };
+};
 
 class MainContainer extends Component {
   constructor() {
     super();
     this.state = {
-      textValue: "",
-      result: "[Empty]"
+      title: ""
     };
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleTextChange(event) {
-    this.setState({ textValue: event.target.value });
+  handleChange(event) {  
+    this.setState({ [event.target.id]: event.target.value });
   }
   handleSubmit(event) {
-    this.setState({ result: this.state.textValue}); 
+    event.preventDefault();
+    const { title } = this.state;
+    const id = uuid();
+    this.props.addArticle({ title, id });
+    this.setState({ title: "" });
   }
   render() {
-    const { title, textValue, result } = this.state;
-    return ([
-      <hr key='break-line' />,
-      <div key='result' id="result">{result}</div>,
-      <hr key='break-line2' />,
-      <form id="title-form" key='title-form'>        
-        <TextField type="text" id="text-field" value={textValue} handleChange={this.handleTextChange} />        
-      </form>,      
-      <button type="submit" id="submit" onClick={this.handleSubmit} >Submit</button>
-    ]);
-  }
+    const { title } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            className="form-control textfield"
+            id="title"
+            value={title}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-success btn-lg">
+          SAVE
+        </button>
+      </form>
+    );
+  } 
 }
-export default MainContainer;
 
+const Container = connect(null, mapDispatchToProps)(MainContainer);
+export default Container;
