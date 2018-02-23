@@ -1,20 +1,18 @@
 // webpack.config.prod.js
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
   devtool: 'source-map',
-  entry: ['./src/index'],
+  entry: [
+    './src/app'
+  ],  
   output: {
     path: path.join(__dirname, '../', 'src/build'),
     filename: 'bundle.js'
   },
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
-  ],
   module: {
     rules: [
       {
@@ -60,6 +58,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
     })
   ] 
 }

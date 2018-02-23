@@ -1,6 +1,6 @@
-var path = require('path')
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -12,6 +12,7 @@ module.exports = {
   },  
   devServer: {
     contentBase: './src/build',
+    port: 8080,
     hot: true
   },
   module: {
